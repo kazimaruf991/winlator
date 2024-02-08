@@ -105,10 +105,12 @@ public class Keyboard {
             if (action == KeyEvent.ACTION_DOWN) {
                 boolean shiftPressed = event.isShiftPressed() || keyCode == KeyEvent.KEYCODE_AT || keyCode == KeyEvent.KEYCODE_STAR || keyCode == KeyEvent.KEYCODE_POUND || keyCode == KeyEvent.KEYCODE_PLUS;
                 if (shiftPressed) xServer.injectKeyPress(XKeycode.KEY_SHIFT_L);
-                xServer.injectKeyPress(xKeycode, event.getUnicodeChar());
+                if (keyCode == KeyEvent.KEYCODE_ENTER) xServer.injectKeyPress(XKeycode.KEY_ENTER);
+                else xServer.injectKeyPress(xKeycode, event.getUnicodeChar());
             }
             else if (action == KeyEvent.ACTION_UP) {
                 xServer.injectKeyRelease(XKeycode.KEY_SHIFT_L);
+                xServer.injectKeyRelease(XKeycode.KEY_ENTER);
                 xServer.injectKeyRelease(xKeycode);
             }
         }
