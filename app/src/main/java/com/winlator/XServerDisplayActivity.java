@@ -222,29 +222,23 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.main_menu_keyboard:
-                AppUtils.showKeyboard(this);
-                drawerLayout.closeDrawers();
-                break;
-            case R.id.main_menu_input_controls:
-                showInputControlsDialog();
-                drawerLayout.closeDrawers();
-                break;
-            case R.id.main_menu_toggle_fullscreen:
-                xServerView.getRenderer().toggleFullscreen();
-                drawerLayout.closeDrawers();
-                break;
-            case R.id.main_menu_task_manager:
-                (new TaskManagerDialog(this)).show();
-                drawerLayout.closeDrawers();
-                break;
-            case R.id.main_menu_touchpad_help:
-                showTouchpadHelpDialog();
-                break;
-            case R.id.main_menu_exit:
-                exit();
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.main_menu_keyboard) {
+            AppUtils.showKeyboard(this);
+            drawerLayout.closeDrawers();
+        } else if (itemId == R.id.main_menu_input_controls) {
+            showInputControlsDialog();
+            drawerLayout.closeDrawers();
+        } else if (itemId == R.id.main_menu_toggle_fullscreen) {
+            xServerView.getRenderer().toggleFullscreen();
+            drawerLayout.closeDrawers();
+        } else if (itemId == R.id.main_menu_task_manager) {
+            (new TaskManagerDialog(this)).show();
+            drawerLayout.closeDrawers();
+        } else if (itemId == R.id.main_menu_touchpad_help) {
+            showTouchpadHelpDialog();
+        } else if (itemId == R.id.main_menu_exit) {
+            exit();
         }
         return true;
     }

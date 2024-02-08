@@ -150,22 +150,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
-        switch (item.getItemId()) {
-            case R.id.main_menu_shortcuts:
-                show(new ShortcutsFragment());
-                break;
-            case R.id.main_menu_containers:
-                show(new ContainersFragment());
-                break;
-            case R.id.main_menu_input_controls:
-                show(new InputControlsFragment(selectedProfileId));
-                break;
-            case R.id.main_menu_settings:
-                show(new SettingsFragment());
-                break;
-            case R.id.main_menu_about:
-                showAboutDialog();
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.main_menu_shortcuts) {
+            show(new ShortcutsFragment());
+        } else if (itemId == R.id.main_menu_containers) {
+            show(new ContainersFragment());
+        } else if (itemId == R.id.main_menu_input_controls) {
+            show(new InputControlsFragment(selectedProfileId));
+        } else if (itemId == R.id.main_menu_settings) {
+            show(new SettingsFragment());
+        } else if (itemId == R.id.main_menu_about) {
+            showAboutDialog();
         }
         return true;
     }

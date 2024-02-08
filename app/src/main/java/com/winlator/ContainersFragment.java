@@ -143,40 +143,35 @@ public class ContainersFragment extends Fragment {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) listItemMenu.setForceShowIcon(true);
 
             listItemMenu.setOnMenuItemClickListener((menuItem) -> {
-                switch (menuItem.getItemId()) {
-                    case R.id.container_run:
-                        Intent intent = new Intent(context, XServerDisplayActivity.class);
-                        intent.putExtra("container_id", container.id);
-                        context.startActivity(intent);
-                        break;
-                    case R.id.container_edit:
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.beginTransaction()
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.container_run) {
+                    Intent intent = new Intent(context, XServerDisplayActivity.class);
+                    intent.putExtra("container_id", container.id);
+                    context.startActivity(intent);
+                } else if (itemId == R.id.container_edit) {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    fragmentManager.beginTransaction()
                             .addToBackStack(null)
                             .replace(R.id.FLFragmentContainer, new ContainerDetailFragment(container.id))
                             .commit();
-                        break;
-                    case R.id.container_duplicate:
-                        ContentDialog.confirm(getContext(), R.string.do_you_want_to_duplicate_this_container, () -> {
-                            preloaderDialog.show(R.string.duplicating_container);
-                            manager.duplicateContainerAsync(container, () -> {
-                                preloaderDialog.close();
-                                loadContainersList();
-                            });
+                } else if (itemId == R.id.container_duplicate) {
+                    ContentDialog.confirm(getContext(), R.string.do_you_want_to_duplicate_this_container, () -> {
+                        preloaderDialog.show(R.string.duplicating_container);
+                        manager.duplicateContainerAsync(container, () -> {
+                            preloaderDialog.close();
+                            loadContainersList();
                         });
-                        break;
-                    case R.id.container_remove:
-                        ContentDialog.confirm(getContext(), R.string.do_you_want_to_remove_this_container, () -> {
-                            preloaderDialog.show(R.string.removing_container);
-                            manager.removeContainerAsync(container, () -> {
-                                preloaderDialog.close();
-                                loadContainersList();
-                            });
+                    });
+                } else if (itemId == R.id.container_remove) {
+                    ContentDialog.confirm(getContext(), R.string.do_you_want_to_remove_this_container, () -> {
+                        preloaderDialog.show(R.string.removing_container);
+                        manager.removeContainerAsync(container, () -> {
+                            preloaderDialog.close();
+                            loadContainersList();
                         });
-                        break;
-                    case R.id.container_info:
-                        showStorageInfoDialog(container);
-                        break;
+                    });
+                } else if (itemId == R.id.container_info) {
+                    showStorageInfoDialog(container);
                 }
                 return true;
             });
